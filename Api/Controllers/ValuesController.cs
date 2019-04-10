@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -37,20 +38,41 @@ namespace Api.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        public void Post([FromBody] string value) { }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        public void Put(int id, [FromBody] string value) { }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(int id) { }
+
+        [HttpGet("Do")]
+        public string Run()
         {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = "docker",
+                Arguments = "images",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+            };
+
+            var process = new Process { StartInfo = psi };
+            process.Start();
+            var output = string.Empty;
+            var error = string.Empty;
+            using(var sr = process.StandardOutput)
+            {
+                output += sr.ReadToEnd();
+            }
+            using(var sr = process.StandardError)
+            {
+                error += sr.ReadToEnd();
+            }
+            return output;
         }
     }
 }

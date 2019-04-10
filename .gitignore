@@ -323,7 +323,8 @@ ASALocalRun/
 internal-nlog.txt
 
 # VS Code Settings
-.vscode
+.vscode/**/*
+!.vscode/*.json
 
 Web.Api/Upload/
 cert/
