@@ -7,6 +7,7 @@ namespace Api.Services
         public AuthService()
         {
             var a = string.Empty;
+            var b = a;
         }
     }
 }
